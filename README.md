@@ -7,24 +7,11 @@ A comprehensive web-based management system for Surigao del Norte State Universi
 ![PHP Version](https://img.shields.io/badge/PHP-%3E%3D8.0-777BB4?style=for-the-badge&logo=php)
 ![Status](https://img.shields.io/badge/Status-In%20Development-yellow?style=for-the-badge)
 
----
-
-## 🎯 Vision & Mission
-
-### Vision
-
-SNSU as a leading institution of higher learning in human development, science and technology, and environmental sustainability in the Caraga Region
-
-### Mission
-
-SNSU shall provide quality education through responsive instruction, distinctive research, sustainable extension, and production services for improved quality of life towards nation building.
-
 ## 🌟 Key Features
 
-- Expert Teachers and Industry Professionals
-- Modern Facilities
-- Interactive Learning Environment
-- State-of-the-art Learning Resources
+- Teacher and Student Management
+- Grading System
+- Subject Management
 
 ## 🛠️ Prerequisites
 
