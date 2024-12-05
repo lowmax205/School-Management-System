@@ -1,89 +1,55 @@
 <?php
-include 'db_config.php'; 
+include 'db_config.php';
 
-if(isset($_POST['register'])) {
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-    $confirm_password = $_POST['confirm_password'];
-    $email = $_POST['email'];
-    $phone = $_POST['phone'];
+$response = ['status' => '', 'message' => ''];
 
-    // Email validation (contains '@')
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $email = trim($_POST['email']);
+    $password = trim($_POST['password']);
+    $confirmPassword = trim($_POST['confirmPassword']);
+
+    // Validate email
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        echo "Invalid email format. Please enter a valid email.";
-    } 
-    // Phone number validation (must be 11 digits)
-    elseif (strlen($phone) != 11 || !ctype_digit($phone)) {
-        echo "Phone number must be exactly 11 digits.";
+        $response = ['status' => 'error', 'message' => 'Invalid email format'];
     }
-    // Password confirmation validation
-    elseif ($password !== $confirm_password) {
-        echo "Passwords do not match.";
+    // Validate password length
+    elseif (strlen($password) < 6) {
+        $response = ['status' => 'error', 'message' => 'Password must be at least 6 characters'];
+    }
+    // Check password match
+    elseif ($password !== $confirmPassword) {
+        $response = ['status' => 'error', 'message' => 'Passwords do not match'];
     } else {
-        // Hash the password using password_hash()
-        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-
-        // Prepare the SQL statement
-        $stmt = $conn->prepare("INSERT INTO users (username, user_password, email, phone_number) VALUES (?, ?, ?, ?)");
+        // Check if email already exists
+        $stmt = $conn->prepare("SELECT id FROM users_auth WHERE email = ?");
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
         
-        // Bind parameters to the SQL query
-        $stmt->bind_param("ssss", $username, $hashed_password, $email, $phone);
-
-        // Execute the query
-        if($stmt->execute()) {
-            echo "Account created successfully. You can now <a href='index.php'>login</a>.";
+        if ($stmt->get_result()->num_rows > 0) {
+            $response = ['status' => 'error', 'message' => 'Email already registered'];
         } else {
-            echo "Error creating account: " . $stmt->error;
-        }
+            $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+            $createdAt = date('Y-m-d H:i:s');
+            $role_user = 'User';
+            $uidRandom = uniqid($role_user.'_', true);
 
-        // Close the statement
+            $stmt = $conn->prepare("INSERT INTO users_auth (email, pwd, uid, role, created_at) VALUES (?, ?, ?, ?, ?)");
+            $stmt->bind_param("sssss", $email, $hashedPassword, $uidRandom, $role_user, $createdAt);
+
+            if ($stmt->execute()) {
+                $response = ['status' => 'success', 'message' => 'Registration successful! You can now login.'];
+            } else {
+                $response = ['status' => 'error', 'message' => 'Registration failed. Please try again.'];
+            }
+        }
         $stmt->close();
     }
+    $conn->close();
+
+    session_start();
+    $_SESSION['auth_response'] = $response;
+    header("Location: ../index.php");
+    exit();
 }
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Create Account</title>
-    <script>
-        function togglePassword() {
-            var passwordField = document.getElementById("password");
-            var confirmPasswordField = document.getElementById("confirm_password");
-            var passwordFieldType = passwordField.type;
-            if (passwordFieldType === "password") {
-                passwordField.type = "text";
-                confirmPasswordField.type = "text";
-            } else {
-                passwordField.type = "password";
-                confirmPasswordField.type = "password";
-            }
-        }
-    </script>
-</head>
-<body>
-    <form action="register.php" method="POST">
-        <label for="username">Username:</label><br>
-        <input type="text" id="username" name="username" required><br><br>
-
-        <label for="email">Email:</label><br>
-        <input type="email" id="email" name="email" required><br><br>
-
-        <label for="phone">Phone Number (11 digits):</label><br>
-        <input type="text" id="phone" name="phone" maxlength="11" required><br><br>
-
-        <label for="password">Password:</label><br>
-        <input type="password" id="password" name="password" required><br><br>
-
-        <label for="confirm_password">Confirm Password:</label><br>
-        <input type="password" id="confirm_password" name="confirm_password" required><br><br>
-
-        <label for="show_password">
-            <input type="checkbox" id="show_password" onclick="togglePassword()"> Show Password
-        </label><br><br>
-
-        <button type="submit" name="register">Create Account</button>
-    </form>
-</body>
-</html>
