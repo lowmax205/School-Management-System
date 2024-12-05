@@ -8,16 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $password = trim($_POST['password']);
     $confirmPassword = trim($_POST['confirmPassword']);
 
-    // Validate email
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $response = ['status' => 'error', 'message' => 'Invalid email format'];
-    }
-    // Validate password length
-    elseif (strlen($password) < 6) {
-        $response = ['status' => 'error', 'message' => 'Password must be at least 6 characters'];
-    }
-    // Check password match
-    elseif ($password !== $confirmPassword) {
+    if ($password !== $confirmPassword) {
         $response = ['status' => 'error', 'message' => 'Passwords do not match'];
     } else {
         // Check if email already exists
@@ -45,10 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stmt->close();
     }
     $conn->close();
-
-    session_start();
-    $_SESSION['auth_response'] = $response;
-    header("Location: ../index.php");
+    echo json_encode($response);
     exit();
 }
 ?>
