@@ -1,0 +1,115 @@
+@import url("theme.css");
+
+body {
+  padding: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.hero-section {
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url("../images/hero-bg.jpg") center/cover no-repeat;
+  background-size: cover;
+  background-position: center;
+  min-height: 500px;
+  margin-top: 0;
+}
+
+.navbar-custom {
+  background-color: var(--secondary-color) !important;
+  padding: 0.5rem 0;
+}
+
+.snsu-logo {
+  height: 60px;
+  width: auto;
+}
+
+.section-title {
+  color: var(--primary-color);
+  position: relative;
+  padding-bottom: 15px;
+  margin-bottom: 30px;
+}
+
+.section-title:after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 3px;
+  background-color: var(--accent-color);
+}
+
+.card {
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+
+}
+.form-control input,
+.form-control textarea {
+      width: 100%;
+  }
+  
+.form-group {
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+.contact-form .form-control {
+    width: 100%;
+    padding: 0.75rem;
+}
+
+.login-button {
+  color: var(--bg-light);
+  background-color: var(--primary-color);
+  border-radius: 5px;
+  padding: 5px 10px;
+  margin: 0 10px;
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.navbar .dropdown-menu {
+  background-color: var(--primary-color);
+  border: none;
+}
+
+.navbar .dropdown-item {
+  color: var(--bg-light);
+}
+
+.navbar .dropdown-item:hover {
+  background-color: var(--primary-color);
+}
+
+.modal-content {
+  border-radius: 15px;
+  overflow: hidden;
+  border: none;
+}
+
+.modal-body {
+  padding: 0;
+}
+
+#authModal .modal-dialog {
+  max-width: 800px;
+}
+
+.navbar {
+  margin: 0;
+  padding: 1rem 0;
+}
+
+main {
+  flex: 1;
+}
