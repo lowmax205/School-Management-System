@@ -167,8 +167,12 @@ form {
 }
 
 .form-group {
-  margin-bottom: 0.5rem;
+  margin-bottom: 1rem;
   width: 100%;
+}
+
+.form-group input {
+  margin-top: 0.25rem;
 }
 
 .form-control {
@@ -208,5 +212,6 @@ form {
   margin-bottom: 0.25rem;
   text-align: left;
   width: 100%;
-  min-height: 20px;
+  min-height: 16px;
+  display: block;
 }

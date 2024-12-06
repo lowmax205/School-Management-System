@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
     registerForm.addEventListener('submit', function(e) {
         e.preventDefault();
         validateRegisterForm();
+        
     });
 });
 
@@ -48,9 +49,13 @@ function validateLoginForm() {
 function validateRegisterForm() {
     clearErrors();
     let isValid = true;
-    const email = document.querySelector('.sign-up-form input[type="email"]').value;
-    const password = document.querySelector('.sign-up-form input[type="password"]:nth-of-type(1)').value;
-    const confirmPassword = document.querySelector('.sign-up-form input[type="password"]:nth-of-type(2)').value;
+    
+    // Get form inputs with more specific selectors
+    const form = document.querySelector('.sign-up-form');
+    const inputs = form.querySelectorAll('input');
+    const email = inputs[0].value;
+    const password = inputs[1].value;
+    const confirmPassword = inputs[2].value;
 
     if (!validateEmail(email)) {
         document.getElementById('email-error-register').textContent = 'Please enter a valid email address';

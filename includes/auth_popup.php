@@ -25,14 +25,17 @@
                     <form class="sign-up-form" id="registerForm" novalidate>
                         <h3>Create Account</h3>
                         <div id="register-error" class="error-message"></div>
+                        
                         <div class="form-group">
                             <div id="email-error-register" class="error-message"></div>
                             <input type="email" class="form-control" placeholder="Email" required>
                         </div>
+                        
                         <div class="form-group">
                             <div id="password-error-register" class="error-message"></div>
                             <input type="password" class="form-control" placeholder="Password" required>
                         </div>
+                        
                         <div class="form-group">
                             <div id="confirm-password-error" class="error-message"></div>
                             <input type="password" class="form-control" placeholder="Confirm Password" required>
