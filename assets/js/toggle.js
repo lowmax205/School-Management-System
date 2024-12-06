@@ -1,3 +1,4 @@
+// login/register toggle
 document.addEventListener('DOMContentLoaded', function() {
     const showRegister = document.getElementById('show-register');
     const showLogin = document.getElementById('show-login');

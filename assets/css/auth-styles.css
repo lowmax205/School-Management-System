@@ -167,7 +167,8 @@ form {
 }
 
 .form-group {
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
+  width: 100%;
 }
 
 .form-control {
@@ -199,4 +200,13 @@ form {
 
 .toggle-text a:hover {
   text-decoration: underline;
+}
+
+.error-message {
+  color: #dc3545;
+  font-size: 0.8rem;
+  margin-bottom: 0.25rem;
+  text-align: left;
+  width: 100%;
+  min-height: 20px;
 }
