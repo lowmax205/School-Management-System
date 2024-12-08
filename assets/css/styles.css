@@ -112,3 +112,48 @@ body {
 main {
   flex: 1;
 }
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    .hero-section {
+        min-height: 300px;
+    }
+    
+    .snsu-logo {
+        height: 40px;
+    }
+    
+    .navbar-custom {
+        padding: 0.3rem 0;
+    }
+    
+    .section-title {
+        font-size: 1.5rem;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .card {
+        margin: 10px;
+    }
+    
+    .login-button {
+        padding: 3px 8px;
+        font-size: 14px;
+    }
+    
+    .navbar {
+        padding: 0.5rem 0;
+    }
+}
+
+/* High Resolution Displays */
+@media screen and (min-width: 1080px) {
+    .container {
+        max-width: 1200px;
+    }
+    
+    .hero-section {
+        min-height: 600px;
+    }
+}

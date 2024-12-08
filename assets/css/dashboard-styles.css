@@ -23,3 +23,50 @@
     margin-left: 250px;
     padding: 20px;
 }
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+        padding-top: 10px;
+    }
+    .content {
+        margin-left: 0;
+        padding: 15px;
+    }
+    .sidebar a {
+        float: left;
+        padding: 8px 12px;
+        font-size: 16px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .sidebar a {
+        width: 100%;
+        float: none;
+        text-align: left;
+    }
+    .content {
+        padding: 10px;
+    }
+}
+
+/* Card Responsiveness */
+@media screen and (min-width: 1080px) {
+    .card {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+}
+
+@media screen and (max-width: 720px) {
+    .card {
+        margin: 10px;
+    }
+    .card-body {
+        padding: 15px;
+    }
+}

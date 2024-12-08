@@ -293,6 +293,51 @@ form {
   form {
     padding: 0.5rem;
   }
+
+  .modal-dialog {
+    max-width: 95%;
+    margin: 10px;
+  }
+
+  .input-field {
+    border-radius: 25px;
+  }
+
+  .auth-btn {
+    width: 120px;
+    height: 40px;
+    font-size: 14px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .auth-container {
+    padding: 0.8rem;
+  }
+
+  .form-control {
+    padding: 0.5rem;
+    font-size: 14px;
+  }
+
+  .title {
+    font-size: 1.8rem;
+  }
+
+  .panel h3 {
+    font-size: 1.2rem;
+  }
+}
+
+@media screen and (min-width: 1080px) {
+  .auth-container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .modal-dialog {
+    max-width: 600px;
+  }
 }
 
 @keyframes fadeIn {
