@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,5 +11,9 @@
     <link href="assets/css/styles.css" rel="stylesheet">
     <link href="assets/css/auth-styles.css" rel="stylesheet">
     <link href="../assets/css/maintenance-styles.css" rel="stylesheet">
+    <link href="../../assets/css/dashboard-styles.css" rel="stylesheet">
+    <link href="assets/css/table-style.css" rel="stylesheet">
+
 </head>
+
 <body>

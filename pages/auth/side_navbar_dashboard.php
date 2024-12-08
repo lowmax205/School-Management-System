@@ -6,20 +6,22 @@ if (!isset($_SESSION['role'])) {
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
-        
+
     </style>
 </head>
+
 <body>
     <div class="sidebar">
         <a href="base_dashboard.php"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
         <?php if ($_SESSION['role'] === 'Admin'): ?>
-            <a href="../admin/profile.php"><i class="fas fa-user-circle"></i> My Profile</a>
+            <a href="../admin/admin_profile.php"><i class="fas fa-user-circle"></i> My Profile</a>
             <a href="../admin/student_list.php"><i class="fas fa-user-graduate"></i> Students</a>
             <a href="../admin/teacher_list.php"><i class="fas fa-chalkboard-teacher"></i> Teachers</a>
             <a href="../admin/course_list.php"><i class="fas fa-book-open"></i> Courses</a>
@@ -37,9 +39,6 @@ if (!isset($_SESSION['role'])) {
         <?php endif; ?>
         <a href="../../server/logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
     </div>
-    <div class="content">
-        <h2>Dashboard Content</h2>
-        <p>Welcome to the School Management System Dashboard.</p>
-    </div>
 </body>
+
 </html>
