@@ -40,4 +40,4 @@ $isAdmin = isset($_SESSION['user']) && $_SESSION['user']['role'] === 'admin';
         </div>
     </div>
 </nav>
-<?php include 'includes/auth_popup.php'; ?>
+<?php include 'includes/auth_base.php'; ?>

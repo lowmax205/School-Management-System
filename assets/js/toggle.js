@@ -1,28 +1,33 @@
-// login/register toggle
 document.addEventListener('DOMContentLoaded', function() {
     const showRegister = document.getElementById('show-register');
     const showLogin = document.getElementById('show-login');
     const loginForm = document.querySelector('.sign-in-form');
     const registerForm = document.querySelector('.sign-up-form');
 
-    // Initialize state
-    loginForm.classList.add('active');
+  // Initialize state
+  loginForm.classList.add("active");
 
-    showRegister.addEventListener('click', (e) => {
-        e.preventDefault();
-        loginForm.classList.remove('active');
-        // Small delay to allow the first animation to start
-        setTimeout(() => {
-            registerForm.classList.add('active');
-        }, 50);
-    });
+  // Handle form switching
+  function switchForms(hideForm, showForm) {
+    hideForm.classList.remove("active");
+    setTimeout(() => {
+      showForm.classList.add("active");
+    }, 300);
+  }
 
-    showLogin.addEventListener('click', (e) => {
-        e.preventDefault();
-        registerForm.classList.remove('active');
-        // Small delay to allow the first animation to start
-        setTimeout(() => {
-            loginForm.classList.add('active');
-        }, 50);
-    });
+  showRegister.addEventListener("click", (e) => {
+    e.preventDefault();
+    switchForms(loginForm, registerForm);
+  });
+
+  showLogin.addEventListener("click", (e) => {
+    e.preventDefault();
+    switchForms(registerForm, loginForm);
+  });
+
+  // Reset form state when modal is closed
+  authModal.addEventListener("hidden.bs.modal", function () {
+    registerForm.classList.remove("active");
+    loginForm.classList.add("active");
+  });
 });
