@@ -1,6 +1,6 @@
 <?php
 session_start();
-if (!isset($_SESSION['role']) || $_SESSION['role'] === 'Admin') {
+if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'Admin') {
     header("Location: ../../index.php");
     exit();
 }
@@ -15,33 +15,34 @@ include '../../includes/header.php';
     <?php include '../auth/side_navbar_dashboard.php'; ?>
     
     <div class="content">
-        <h2>My Subjects</h2>
+        <h2>Course Management</h2>
         <div class="card">
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h5>Subject List</h5>
-                    <button class="btn btn-primary"><i class="fas fa-plus"></i> Add Subject</button>
+                    <h5>Course List</h5>
+                    <button class="btn btn-primary"><i class="fas fa-plus"></i> Add Course</button>
                 </div>
                 <div class="table-responsive">
                     <table class="table table-hover">
                         <thead>
                             <tr>
-                                <th>Subject Code</th>
-                                <th>Subject Name</th>
-                                <th>Units</th>
+                                <th>Course Code</th>
+                                <th>Course Name</th>
                                 <th>Department</th>
+                                <th>Units</th>
                                 <th>Status</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td colspan="6" class="text-center">Subject list coming soon...</td>
+                                <td colspan="6" class="text-center">Course list coming soon...</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
+        </div>
     </div>
 </div>
 

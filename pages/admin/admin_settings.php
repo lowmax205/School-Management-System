@@ -15,9 +15,9 @@ include '../../includes/header.php';
     <?php include '../auth/side_navbar_dashboard.php'; ?>
     
     <div class="content">
-        <h2>My Grade</h2>
+        <h2>Admin Settings</h2>
         
-    </div>
+            </div>
 </div>
 
 <?php include '../../includes/footer.php'; ?>

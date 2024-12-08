@@ -5,10 +5,8 @@ document.addEventListener("DOMContentLoaded", function () {
   const registerForm = document.querySelector(".sign-up-form");
   const authModal = document.getElementById("authModal");
 
-  // Initialize state
   loginForm.classList.add("active");
 
-  // Handle form switching
   function switchForms(hideForm, showForm) {
     hideForm.classList.remove("active");
     setTimeout(() => {
@@ -26,9 +24,12 @@ document.addEventListener("DOMContentLoaded", function () {
     switchForms(registerForm, loginForm);
   });
 
-  // Reset form state when modal is closed
   authModal.addEventListener("hidden.bs.modal", function () {
     registerForm.classList.remove("active");
     loginForm.classList.add("active");
   });
+
+  const script = document.createElement("script");
+  script.src = "assets/js/error_handler.js";
+  document.body.appendChild(script);
 });

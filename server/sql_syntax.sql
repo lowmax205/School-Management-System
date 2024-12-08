@@ -15,13 +15,25 @@ CREATE TABLE users_auth (
 -- Create user_info table
 CREATE TABLE user_info (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    uid VARCHAR(50) DEFAULT (CONCAT('UID', LPAD(FLOOR(RAND() * 1000000), 6, '0'))),
+    uid VARCHAR(50),
     first_name VARCHAR(50),
     last_name VARCHAR(50),
+    type ENUM('Student', 'Teacher', 'Staff'),
     birth_date DATE,
     gender ENUM('M', 'F', 'Other'),
     address TEXT,
     phone VARCHAR(20),
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (uid) REFERENCES users_auth(uid)
+    FOREIGN KEY (uid) REFERENCES users_auth(uid) ON DELETE CASCADE
 );
+
+-- Create trigger for automatic user_info creation
+DELIMITER //
+CREATE TRIGGER after_user_auth_insert 
+AFTER INSERT ON users_auth
+FOR EACH ROW
+BEGIN
+    INSERT INTO user_info (uid)
+    VALUES (NEW.uid);
+END//
+DELIMITER ;

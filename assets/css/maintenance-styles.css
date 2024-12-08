@@ -18,7 +18,7 @@ main {
     max-width: 600px;
 }
 .warning-icon {
-    font-size: 80px;
+    font-size: 48px;
     color: var(--warning-color-orange);
     margin-bottom: 20px;
 }
@@ -29,4 +29,24 @@ h1 {
 p {
     color: var(--text-color);
     line-height: 1.6;
+}
+
+.card {
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.card-body {
+    padding: 2rem;
+}
+
+.card-title {
+    color: var(--text-color);
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+}
+
+.card-text {
+    color: var(--text-color);
+    margin-bottom: 0.5rem;
 }
