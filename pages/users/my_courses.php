@@ -1,7 +1,10 @@
 <?php
 session_start();
-if (!isset($_SESSION['role']) || $_SESSION['role'] === 'User') {
-    header("Location: ../../index.php");
+if (!isset($_SESSION['role'])) {
+    echo "<script>
+        alert('You are not authorized to access this page yet, please contact the admin.');
+        window.history.back();
+    </script>";
     exit();
 }
 include '../../includes/header.php';

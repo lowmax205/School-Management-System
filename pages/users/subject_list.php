@@ -1,9 +1,13 @@
 <?php
 session_start();
-if (!isset($_SESSION['role']) || $_SESSION['role'] === 'User') {
-    header("Location: ../../index.php");
+if (!isset($_SESSION['role'])) {
+    echo "<script>
+        alert('Not authorized');
+        window.history.back();
+    </script>";
     exit();
 }
+
 include '../../includes/header.php';
 include '../../server/query/subject.query.php';
 include '../../server/query/student.query.php';
@@ -11,7 +15,9 @@ include '../../server/query/student.query.php';
 $MAX_UNITS = 21;
 $current_units = getTotalUnits($_SESSION['uid']);
 $available_units = $MAX_UNITS - $current_units;
+$subjects = getSubjects();
 
+// Handle POST request for subject enrollment
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $subject_code = $_POST['subject_code'];
     $subject = getSubjectByCode($subject_code);
@@ -24,8 +30,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['error'] = "Exceeds maximum allowed units of " . $MAX_UNITS;
     }
 }
-
-$subjects = getSubjects();
 ?>
 
 <link href="../../assets/css/dashboard-styles.css" rel="stylesheet">

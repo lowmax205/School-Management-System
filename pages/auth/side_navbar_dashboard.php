@@ -19,9 +19,10 @@ if (!isset($_SESSION['role'])) {
 
 <body>
     <div class="sidebar">
-        <a href="base_dashboard.php"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+        <a href="../auth/base_dashboard.php"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
         <?php if ($_SESSION['role'] === 'Admin'): ?>
             <a href="../admin/admin_profile.php"><i class="fas fa-user-circle"></i> My Profile</a>
+            <a href="../admin/users_management.php"><i class="fas fa-user-graduate"></i> User Management</a>
             <a href="../admin/student_list.php"><i class="fas fa-user-graduate"></i> Students</a>
             <a href="../admin/teacher_list.php"><i class="fas fa-chalkboard-teacher"></i> Teachers</a>
             <a href="../admin/course_list.php"><i class="fas fa-book-open"></i> Courses</a>

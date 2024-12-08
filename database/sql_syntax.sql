@@ -98,6 +98,17 @@ CREATE TABLE system_log (
     FOREIGN KEY (user_id) REFERENCES users_auth(uid) ON DELETE CASCADE
 );
 
+-- Create staff table
+CREATE TABLE staff (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    uid VARCHAR(50),
+    department VARCHAR(50),
+    position VARCHAR(50),
+    status ENUM('Active', 'Inactive') DEFAULT 'Active',
+    FOREIGN KEY (uid) REFERENCES users_auth(uid) ON DELETE CASCADE,
+    FOREIGN KEY (uid) REFERENCES user_info(uid) ON DELETE CASCADE
+);
+
 -- Create trigger for automatic user_info creation
 DELIMITER //
 CREATE TRIGGER after_user_auth_insert 
@@ -108,3 +119,52 @@ BEGIN
     VALUES (NEW.uid);
 END//
 DELIMITER ;
+
+-- Drop and recreate the role change trigger
+DROP TRIGGER IF EXISTS after_role_change;
+DELIMITER //
+CREATE TRIGGER after_role_change
+AFTER UPDATE ON user_info
+FOR EACH ROW
+BEGIN
+    IF NEW.type != OLD.type THEN
+        -- Delete old role records first
+        DELETE FROM teacher WHERE uid = NEW.uid;
+        DELETE FROM student WHERE uid = NEW.uid;
+        DELETE FROM staff WHERE uid = NEW.uid;
+        
+        -- Insert new role record based on type
+        CASE NEW.type
+            WHEN 'Teacher' THEN
+                INSERT INTO teacher (uid, department, status)
+                VALUES (NEW.uid, 'Unassigned', 'Active');
+            WHEN 'Staff' THEN 
+                INSERT INTO staff (uid, department, position)
+                VALUES (NEW.uid, 'Unassigned', 'General Staff');
+            WHEN 'Student' THEN
+                -- Get current count of students for this year
+                SET @year = YEAR(CURDATE());
+                SET @count = (
+                    SELECT COUNT(*) + 1
+                    FROM student 
+                    WHERE LEFT(id_no, 4) = @year
+                );
+                
+                INSERT INTO student (uid, year, section, status, program, major, id_no)
+                VALUES (
+                    NEW.uid, 
+                    1, 
+                    'A', 
+                    'Active', 
+                    'Unassigned', 
+                    'Undeclared',
+                    CONCAT(@year, '-', LPAD(@count, 6, '0'))
+                );
+        END CASE;
+    END IF;
+END//
+DELIMITER ;
+
+-- Add Admin Users Auth Data
+INSERT INTO users_auth (email, pwd, role) VALUES
+('admin@admin.ph', 'qweqwe', 'Admin')
