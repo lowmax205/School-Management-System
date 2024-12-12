@@ -1,8 +1,10 @@
-
 <?php
 session_start();
-if (!isset($_SESSION['role']) || $_SESSION['role'] === 'Admin') {
-    header("Location: ../../index.php");
+if (!isset($_SESSION['role'])) {
+    echo "<script>
+        alert('You are not authorized to access this page yet, please contact the admin.');
+        window.history.back();
+    </script>";
     exit();
 }
 include '../../includes/header.php';
@@ -12,7 +14,7 @@ include '../../includes/header.php';
 
 <div class="dashboard-container">
     <?php include '../auth/side_navbar_dashboard.php'; ?>
-    
+
     <div class="content">
         <h2>My Courses</h2>
         <div class="row">

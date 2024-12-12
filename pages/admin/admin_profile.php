@@ -1,8 +1,6 @@
 <?php
 session_start();
-
-// Check if user is logged in and has a role
-if (!isset($_SESSION['user_id']) || !isset($_SESSION['role'])) {
+if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'Admin') {
     header("Location: ../../index.php");
     exit();
 }
@@ -98,7 +96,6 @@ $userDetails = getUserDetails($_SESSION['uid']);
         e.preventDefault();
         const formData = new FormData(this);
 
-        // Add loading state
         const submitButton = this.querySelector('button[type="submit"]');
         submitButton.disabled = true;
         submitButton.innerHTML = 'Updating...';
@@ -111,7 +108,6 @@ $userDetails = getUserDetails($_SESSION['uid']);
             .then(data => {
                 if (data.status === 'success') {
                     alert('Profile updated successfully');
-                    // Reload page to show updated info
                     window.location.reload();
                 } else {
                     alert('Error: ' + data.message);
@@ -122,7 +118,6 @@ $userDetails = getUserDetails($_SESSION['uid']);
                 console.error('Error:', error);
             })
             .finally(() => {
-                // Reset button state
                 submitButton.disabled = false;
                 submitButton.innerHTML = 'Update Profile';
             });

@@ -1,12 +1,10 @@
 <?php
 session_start();
-if (!isset($_SESSION['role']) || $_SESSION['role'] === 'User') {
-    echo "<script>
-        alert('You are not authorized to access this page yet, please contact the admin.');
-        window.history.back();
-    </script>";
+if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'Admin') {
+    header("Location: ../../index.php");
     exit();
 }
+
 header("Location: ../../server/maintenance.php");
 exit();
 include '../../includes/header.php';
@@ -18,27 +16,26 @@ include '../../includes/header.php';
     <?php include '../auth/side_navbar_dashboard.php'; ?>
 
     <div class="content">
-        <h2>Class Schedule</h2>
+        <h2>Reports</h2>
         <div class="row">
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Weekly Schedule</h5>
+                        <h5 class="card-title">Report Title</h5>
                         <div class="table-responsive">
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
-                                        <th>Time</th>
-                                        <th>Monday</th>
-                                        <th>Tuesday</th>
-                                        <th>Wednesday</th>
-                                        <th>Thursday</th>
-                                        <th>Friday</th>
+                                        <th>Column 1</th>
+                                        <th>Column 2</th>
+                                        <th>Column 3</th>
+                                        <th>Column 4</th>
+                                        <th>Column 5</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td colspan="6" class="text-center">Schedule coming soon...</td>
+                                        <td colspan="5" class="text-center">Report data coming soon...</td>
                                     </tr>
                                 </tbody>
                             </table>
