@@ -1,16 +1,19 @@
-
 <?php
 require_once __DIR__ . '/../db_config.php';
 
-function getAllUsers()
+function getAllUsers($start = 0, $limit = 10)
 {
     global $conn;
     $sql = "SELECT ua.*, ui.first_name, ui.last_name, ui.type, ui.birth_date, 
                    ui.gender, ui.address, ui.phone 
             FROM users_auth ua
             LEFT JOIN user_info ui ON ua.uid = ui.uid
-            ORDER BY ua.created_at DESC";
-    return $conn->query($sql);
+            ORDER BY ua.created_at DESC
+            LIMIT ?, ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ii", $start, $limit);
+    $stmt->execute();
+    return $stmt->get_result();
 }
 
 function updateUserRole($uid, $role, $type)
@@ -50,4 +53,12 @@ function getUserDetails($uid)
     $stmt->bind_param("s", $uid);
     $stmt->execute();
     return $stmt->get_result()->fetch_assoc();
+}
+
+function getTotalUsersCount() {
+    global $conn;
+    $sql = "SELECT COUNT(*) as total FROM users_auth";
+    $result = $conn->query($sql);
+    $row = $result->fetch_assoc();
+    return $row['total'];
 }
