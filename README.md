@@ -5,7 +5,7 @@
 A comprehensive web-based management system for Surigao del Norte State University (SNSU), designed to streamline administrative processes and enhance the educational experience. This system embodies our motto: "Excellence, Innovation, and Social Transformation."
 
 ![PHP Version](https://img.shields.io/badge/PHP-%3E%3D8.0-777BB4?style=for-the-badge&logo=php)
-![Status](https://img.shields.io/badge/Status-In%20Development-yellow?style=for-the-badge)
+![Status](https://img.shields.io/badge/Status-Ongoing-orange?style=for-the-badge)
 
 ## 🌟 Key Features
 
