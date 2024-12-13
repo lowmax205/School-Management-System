@@ -1,17 +1,16 @@
 document.addEventListener("DOMContentLoaded", function () {
   const showRegister = document.getElementById("show-register");
   const showLogin = document.getElementById("show-login");
-  const loginForm = document.querySelector(".sign-in-form");
-  const registerForm = document.querySelector(".sign-up-form");
+  const loginForm = document.getElementById("loginForm");
+  const registerForm = document.getElementById("registerForm");
   const authModal = document.getElementById("authModal");
 
-  loginForm.classList.add("active");
+  loginForm.style.display = "block";
+  registerForm.style.display = "none";
 
   function switchForms(hideForm, showForm) {
-    hideForm.classList.remove("active");
-    setTimeout(() => {
-      showForm.classList.add("active");
-    }, 300);
+    hideForm.style.display = "none";
+    showForm.style.display = "block";
   }
 
   showRegister.addEventListener("click", (e) => {
@@ -25,8 +24,8 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   authModal.addEventListener("hidden.bs.modal", function () {
-    registerForm.classList.remove("active");
-    loginForm.classList.add("active");
+    registerForm.style.display = "none";
+    loginForm.style.display = "block";
   });
 
   const script = document.createElement("script");
