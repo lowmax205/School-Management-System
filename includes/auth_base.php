@@ -6,7 +6,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="position: absolute; top: 10px; right: 10px;"></button>
                     <h2>Welcome to Surigao del Norte State University</h2>
                     <p class="subtitle">Excellence, Innovation, and Social Transformation</p>
-                    
+
                     <form class="sign-in-form active" id="loginForm" novalidate action="../server/login_handler.php" method="POST">
                         <h3>Sign In</h3>
                         <div id="login-error" class="error-message"></div>
@@ -25,17 +25,17 @@
                     <form class="sign-up-form" id="registerForm" novalidate action="../server/register_handler.php" method="POST">
                         <h3>Create Account</h3>
                         <div id="register-error" class="error-message"></div>
-                        
+
                         <div class="form-group">
                             <div id="email-error-register" class="error-message"></div>
                             <input type="email" class="form-control" placeholder="Email" required>
                         </div>
-                        
+
                         <div class="form-group">
                             <div id="password-error-register" class="error-message"></div>
                             <input type="password" class="form-control" placeholder="Password" required>
                         </div>
-                        
+
                         <div class="form-group">
                             <div id="confirm-password-error" class="error-message"></div>
                             <input type="password" class="form-control" placeholder="Confirm Password" required>
