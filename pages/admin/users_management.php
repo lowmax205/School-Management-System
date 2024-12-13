@@ -236,11 +236,11 @@ $users = getAllUsers($start, $usersPerPage);
             button.addEventListener('click', function() {
                 const row = this.closest('tr');
                 const uid = this.dataset.uid;
-                
+
                 // Show edit fields
                 row.querySelectorAll('.name-text, .email-text, .role-text, .type-text').forEach(el => el.classList.add('d-none'));
                 row.querySelectorAll('.name-edit, .email-edit, .role-edit, .type-edit').forEach(el => el.classList.remove('d-none'));
-                
+
                 // Show/hide buttons
                 this.classList.add('d-none');
                 row.querySelector('.save-user').classList.remove('d-none');
@@ -253,7 +253,7 @@ $users = getAllUsers($start, $usersPerPage);
             button.addEventListener('click', function() {
                 const row = this.closest('tr');
                 const uid = this.dataset.uid;
-                
+
                 const userData = {
                     uid: uid,
                     first_name: row.querySelector('.name-edit input:first-child').value,
@@ -264,28 +264,28 @@ $users = getAllUsers($start, $usersPerPage);
                 };
 
                 fetch('../../server/query/update_user.php', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(userData)
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.status === 'success') {
-                        // Update display
-                        row.querySelector('.name-text').textContent = `${userData.first_name} ${userData.last_name}`;
-                        row.querySelector('.email-text').textContent = userData.email;
-                        row.querySelector('.role-text').textContent = userData.role;
-                        row.querySelector('.type-text').textContent = userData.type;
-                        
-                        // Reset view
-                        resetRowView(row);
-                        alert('User updated successfully');
-                    } else {
-                        alert('Error: ' + data.message);
-                    }
-                });
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(userData)
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.status === 'success') {
+                            // Update display
+                            row.querySelector('.name-text').textContent = `${userData.first_name} ${userData.last_name}`;
+                            row.querySelector('.email-text').textContent = userData.email;
+                            row.querySelector('.role-text').textContent = userData.role;
+                            row.querySelector('.type-text').textContent = userData.type;
+
+                            // Reset view
+                            resetRowView(row);
+                            alert('User updated successfully');
+                        } else {
+                            alert('Error: ' + data.message);
+                        }
+                    });
             });
         });
 
@@ -402,21 +402,23 @@ $users = getAllUsers($start, $usersPerPage);
                 if (confirm('Are you sure you want to delete this user? This action cannot be undone.')) {
                     const uid = this.dataset.uid;
                     fetch('../../server/query/delete_user.php', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({ uid: uid })
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.status === 'success') {
-                            this.closest('tr').remove();
-                            alert('User deleted successfully');
-                        } else {
-                            alert('Error: ' + data.message);
-                        }
-                    });
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                uid: uid
+                            })
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.status === 'success') {
+                                this.closest('tr').remove();
+                                alert('User deleted successfully');
+                            } else {
+                                alert('Error: ' + data.message);
+                            }
+                        });
                 }
             });
         });
@@ -433,7 +435,11 @@ $users = getAllUsers($start, $usersPerPage);
         padding: 2px;
         height: auto;
     }
-    .name-cell, .email-cell, .role-cell, .type-cell {
+
+    .name-cell,
+    .email-cell,
+    .role-cell,
+    .type-cell {
         min-width: 150px;
     }
 </style>

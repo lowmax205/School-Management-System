@@ -134,4 +134,4 @@ DELIMITER ;
 
 -- Add Admin Users Auth Data
 INSERT INTO users_auth (email, pwd, role) VALUES
-('admin@admin.ph', 'qweqwe', 'Admin')
+('admin@admin.ph', 'admin123', 'Admin')
