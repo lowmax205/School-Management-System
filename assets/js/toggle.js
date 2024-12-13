@@ -1,34 +1,28 @@
-document.addEventListener("DOMContentLoaded", function () {
-  const showRegister = document.getElementById("show-register");
-  const showLogin = document.getElementById("show-login");
-  const loginForm = document.getElementById("loginForm");
-  const registerForm = document.getElementById("registerForm");
-  const authModal = document.getElementById("authModal");
+// login/register toggle
+document.addEventListener('DOMContentLoaded', function() {
+    const showRegister = document.getElementById('show-register');
+    const showLogin = document.getElementById('show-login');
+    const loginForm = document.querySelector('.sign-in-form');
+    const registerForm = document.querySelector('.sign-up-form');
 
-  loginForm.style.display = "block";
-  registerForm.style.display = "none";
+    // Initialize state
+    loginForm.classList.add('active');
 
-  function switchForms(hideForm, showForm) {
-    hideForm.style.display = "none";
-    showForm.style.display = "block";
-  }
+    showRegister.addEventListener('click', (e) => {
+        e.preventDefault();
+        loginForm.classList.remove('active');
+        // Small delay to allow the first animation to start
+        setTimeout(() => {
+            registerForm.classList.add('active');
+        }, 50);
+    });
 
-  showRegister.addEventListener("click", (e) => {
-    e.preventDefault();
-    switchForms(loginForm, registerForm);
-  });
-
-  showLogin.addEventListener("click", (e) => {
-    e.preventDefault();
-    switchForms(registerForm, loginForm);
-  });
-
-  authModal.addEventListener("hidden.bs.modal", function () {
-    registerForm.style.display = "none";
-    loginForm.style.display = "block";
-  });
-
-  const script = document.createElement("script");
-  script.src = "assets/js/error_handler.js";
-  document.body.appendChild(script);
+    showLogin.addEventListener('click', (e) => {
+        e.preventDefault();
+        registerForm.classList.remove('active');
+        // Small delay to allow the first animation to start
+        setTimeout(() => {
+            loginForm.classList.add('active');
+        }, 50);
+    });
 });

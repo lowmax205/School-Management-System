@@ -14,11 +14,11 @@
                                 <h3>Sign In</h3>
                                 <div id="login-errors" class="alert alert-danger" style="display: none;"></div>
                                 <div class="form-group">
-                                    <div class="error-container" id="login-email-error"></div>
+                                    <div class="error-container" id="email-error-login"></div>
                                     <input type="email" class="form-control" name="email" id="login-email" placeholder="Email">
                                 </div>
                                 <div class="form-group">
-                                    <div class="error-container" id="login-password-error"></div>
+                                    <div class="error-container" id="password-error-login"></div>
                                     <input type="password" class="form-control" name="password" id="login-password" placeholder="Password">
                                 </div>
                                 <button type="submit" class="btn btn-primary">Login</button>
@@ -49,3 +49,4 @@
         </div>
     </div>
 </div>
+<script src="assets/js/toggle.js"></script>
