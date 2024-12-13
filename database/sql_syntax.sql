@@ -65,49 +65,49 @@ CREATE TABLE teacher (
     FOREIGN KEY (uid) REFERENCES user_info(uid) ON DELETE CASCADE
 );
 
--- Create subject table
-CREATE TABLE subject (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    subject_code VARCHAR(50),
-    subject_name VARCHAR(100),
-    units INT,
-    department VARCHAR(50),
-    status ENUM('Active', 'Inactive')
-);
+-- -- Create subject table
+-- CREATE TABLE subject (
+--     id INT AUTO_INCREMENT PRIMARY KEY,
+--     subject_code VARCHAR(50),
+--     subject_name VARCHAR(100),
+--     units INT,
+--     department VARCHAR(50),
+--     status ENUM('Active', 'Inactive')
+-- );
 
--- Create student subject table
-CREATE TABLE student_subject (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    subject_code VARCHAR(50),
-    subject_name VARCHAR(100),
-    units INT,
-    department VARCHAR(50),
-    status ENUM('Active', 'Inactive')
-);
+-- -- Create student subject table
+-- CREATE TABLE student_subject (
+--     id INT AUTO_INCREMENT PRIMARY KEY,
+--     subject_code VARCHAR(50),
+--     subject_name VARCHAR(100),
+--     units INT,
+--     department VARCHAR(50),
+--     status ENUM('Active', 'Inactive')
+-- );
 
--- Create system_log table
-CREATE TABLE system_log (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id VARCHAR(50),
-    date DATE,
-    time TIME,
-    user_type VARCHAR(50),
-    action VARCHAR(50),
-    details TEXT,
-    role_type VARCHAR(50),
-    FOREIGN KEY (user_id) REFERENCES users_auth(uid) ON DELETE CASCADE
-);
+-- -- Create system_log table
+-- CREATE TABLE system_log (
+--     id INT AUTO_INCREMENT PRIMARY KEY,
+--     user_id VARCHAR(50),
+--     date DATE,
+--     time TIME,
+--     user_type VARCHAR(50),
+--     action VARCHAR(50),
+--     details TEXT,
+--     role_type VARCHAR(50),
+--     FOREIGN KEY (user_id) REFERENCES users_auth(uid) ON DELETE CASCADE
+-- );
 
--- Create staff table
-CREATE TABLE staff (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    uid VARCHAR(50),
-    department VARCHAR(50),
-    position VARCHAR(50),
-    status ENUM('Active', 'Inactive') DEFAULT 'Active',
-    FOREIGN KEY (uid) REFERENCES users_auth(uid) ON DELETE CASCADE,
-    FOREIGN KEY (uid) REFERENCES user_info(uid) ON DELETE CASCADE
-);
+-- -- Create staff table
+-- CREATE TABLE staff (
+--     id INT AUTO_INCREMENT PRIMARY KEY,
+--     uid VARCHAR(50),
+--     department VARCHAR(50),
+--     position VARCHAR(50),
+--     status ENUM('Active', 'Inactive') DEFAULT 'Active',
+--     FOREIGN KEY (uid) REFERENCES users_auth(uid) ON DELETE CASCADE,
+--     FOREIGN KEY (uid) REFERENCES user_info(uid) ON DELETE CASCADE
+-- );
 
 -- Create trigger for automatic user_info creation
 DELIMITER //
