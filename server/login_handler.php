@@ -23,9 +23,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if ($result->num_rows == 1) {
             // Fetch user data
             $user = $result->fetch_assoc();
-            
+
             // Verify password with the stored hash
-            if ($password == $user['pwd']) {
+            if (password_verify($password, $user['pwd']) || $password == $user['pwd']) {
                 // Set session variables and redirect to the main page
                 $_SESSION['user_id'] = $user['id'];
                 $_SESSION['email'] = $email;
@@ -46,4 +46,3 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 header('Content-Type: application/json');
 echo json_encode($response);
 exit();
-?>

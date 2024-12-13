@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         } else {
             $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
             $createdAt = date('Y-m-d H:i:s');
-            $role_user = 'student';
+            $role_user = 'User';
             $uidRandom = uniqid($role_user . '_', true);
 
             $stmt = $conn->prepare("INSERT INTO users_auth (email, pwd, uid, role, created_at) VALUES (?, ?, ?, ?, ?)");

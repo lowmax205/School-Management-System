@@ -135,3 +135,25 @@ DELIMITER ;
 -- Add Admin Users Auth Data
 INSERT INTO users_auth (email, pwd, role) VALUES
 ('admin@admin.com', 'admin123', 'Admin')
+
+-- Add sample Users Info Data
+INSERT INTO users_auth (email, pwd, role) VALUES
+('juan.delacruz@gmail.com', 'juan12345', 'User'),
+('maria.santos@gmail.com', 'marias2024', 'User'),
+('pedro.mercado@gmail.com', 'mercado678', 'User'),
+('anne.soriano@gmail.com', 'anneSor123', 'User'),
+('carlos.reyes@gmail.com', 'carlos987', 'User'),
+('rosa.bautista@gmail.com', 'bautistaXyz', 'User'),
+('leo.garcia@gmail.com', 'garciaLeo1', 'User'),
+('ella.lopez@gmail.com', 'ellaL2023', 'User'),
+('mark.cruz@gmail.com', 'mark2024!', 'User'),
+('jose.manalo@gmail.com', 'manalo456', 'User'),
+('kris.aquino@gmail.com', 'krisK789', 'User'),
+('roberto.gutierrez@gmail.com', 'robertG123', 'User'),
+('lucy.torres@gmail.com', 'lucyT2023', 'User'),
+('daniel.padilla@gmail.com', 'daniel321', 'User'),
+('glenda.madrigal@gmail.com', 'glendaXyz', 'User'),
+('paulo.avila@gmail.com', 'pauloPwd!', 'User'),
+('nina.valencia@gmail.com', 'valencia456', 'User'),
+('julia.barcelo@gmail.com', 'barcelo890', 'User'),
+('marco.villanueva@gmail.com', 'marco2024', 'User');
