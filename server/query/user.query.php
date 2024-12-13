@@ -4,13 +4,28 @@ require_once __DIR__ . '/../db_config.php';
 function getAllUsers($start = 0, $limit = 10)
 {
     global $conn;
-    $sql = "SELECT ua.*, ui.first_name, ui.last_name, ui.type, ui.birth_date, 
-                   ui.gender, ui.address, ui.phone 
-            FROM users_auth ua
-            LEFT JOIN user_info ui ON ua.uid = ui.uid
-            ORDER BY ua.created_at DESC
-            LIMIT ?, ?";
-    $stmt = $conn->prepare($sql);
+    $query = "SELECT 
+                ua.uid, 
+                ua.email, 
+                ua.role, 
+                ui.first_name, 
+                ui.last_name, 
+                ui.type,
+                CASE 
+                    WHEN ui.type = 'Student' THEN s.status
+                    WHEN ui.type = 'Teacher' THEN t.status
+                    WHEN ui.type = 'Staff' THEN st.status
+                    WHEN ua.role = 'Admin' THEN a.status
+                    ELSE 'Active'
+                END as status
+              FROM users_auth ua 
+              LEFT JOIN user_info ui ON ua.uid = ui.uid 
+              LEFT JOIN student s ON ui.uid = s.uid AND ui.type = 'Student'
+              LEFT JOIN teacher t ON ui.uid = t.uid AND ui.type = 'Teacher'
+              LEFT JOIN staff st ON ui.uid = st.uid AND ui.type = 'Staff'
+              LEFT JOIN admin a ON ui.uid = a.uid AND ua.role = 'Admin'
+              LIMIT ?, ?";
+    $stmt = $conn->prepare($query);
     $stmt->bind_param("ii", $start, $limit);
     $stmt->execute();
     return $stmt->get_result();
@@ -55,7 +70,8 @@ function getUserDetails($uid)
     return $stmt->get_result()->fetch_assoc();
 }
 
-function getTotalUsersCount() {
+function getTotalUsersCount()
+{
     global $conn;
     $sql = "SELECT COUNT(*) as total FROM users_auth";
     $result = $conn->query($sql);

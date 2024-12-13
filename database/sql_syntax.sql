@@ -18,7 +18,7 @@ CREATE TABLE user_info (
     uid VARCHAR(50),
     first_name VARCHAR(50),
     last_name VARCHAR(50),
-    type ENUM('Student', 'Teacher', 'Staff'),
+    type ENUM('Student', 'Teacher', 'Staff') DEFAULT 'Student',
     birth_date DATE,
     gender ENUM('M', 'F', 'Other'),
     address TEXT,
@@ -32,7 +32,7 @@ CREATE TABLE admin (
     id INT AUTO_INCREMENT PRIMARY KEY,
     uid VARCHAR(50),
     role VARCHAR(50),
-    status ENUM('Active', 'Inactive'),
+    status ENUM('Active', 'Inactive') DEFAULT 'Active',
     position VARCHAR(50),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -46,7 +46,7 @@ CREATE TABLE student (
     uid VARCHAR(50),
     year INT,
     section VARCHAR(10),
-    status ENUM('Active', 'Inactive'),
+    status ENUM('Active', 'Inactive') DEFAULT 'Active',
     program VARCHAR(50),
     major VARCHAR(50),
     id_no VARCHAR(50),
@@ -60,7 +60,7 @@ CREATE TABLE teacher (
     uid VARCHAR(50),
     department VARCHAR(50),
     contact VARCHAR(20),
-    status ENUM('Active', 'Inactive'),
+    status ENUM('Active', 'Inactive') DEFAULT 'Active',
     FOREIGN KEY (uid) REFERENCES users_auth(uid) ON DELETE CASCADE,
     FOREIGN KEY (uid) REFERENCES user_info(uid) ON DELETE CASCADE
 );
@@ -134,4 +134,4 @@ DELIMITER ;
 
 -- Add Admin Users Auth Data
 INSERT INTO users_auth (email, pwd, role) VALUES
-('admin@admin.ph', 'admin123', 'Admin')
+('admin@admin.com', 'admin123', 'Admin')

@@ -24,18 +24,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stmt = $conn->prepare("SELECT id FROM users_auth WHERE email = ?");
         $stmt->bind_param("s", $email);
         $stmt->execute();
-        
+
         if ($stmt->get_result()->num_rows > 0) {
             $response = ['status' => 'error', 'message' => 'Email is already registered'];
         } else {
             $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
             $createdAt = date('Y-m-d H:i:s');
             $role_user = 'student';
-            $uidRandom = uniqid($role_user.'_', true);
+            $uidRandom = uniqid($role_user . '_', true);
 
             $stmt = $conn->prepare("INSERT INTO users_auth (email, pwd, uid, role, created_at) VALUES (?, ?, ?, ?, ?)");
             $stmt->bind_param("sssss", $email, $hashedPassword, $uidRandom, $role_user, $createdAt);
-            
+
             if ($stmt->execute()) {
                 $stmt = $conn->prepare("SELECT id, email, uid FROM users_auth WHERE email = ?");
                 $stmt->bind_param("s", $email);
@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $result = $stmt->get_result();
                 $user = $result->fetch_assoc();
                 $response = [
-                    'status' => 'success', 
+                    'status' => 'success',
                     'message' => 'Registration successful! You can now login.',
                     'user' => [
                         'id' => $user['id'],
@@ -63,4 +63,3 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     echo json_encode($response);
     exit();
 }
-?>

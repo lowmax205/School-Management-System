@@ -215,3 +215,13 @@ form {
   min-height: 16px;
   display: block;
 }
+
+.success-message {
+  color: #28a745;
+  font-size: 0.8rem;
+  margin-bottom: 0.25rem;
+  text-align: left;
+  width: 100%;
+  min-height: 16px;
+  display: block;
+}
