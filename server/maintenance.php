@@ -15,5 +15,6 @@
         </div>
     </div>
 </main>
+<?php include '../includes/header.php'; ?>
 </body>
 </html>

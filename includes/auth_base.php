@@ -10,7 +10,7 @@
                     <p class="subtitle">Excellence, Innovation, and Social Transformation</p>
                     <div class="forms-container">
                         <div class="signin-signup">
-                            <form id="loginForm" class="sign-in-form" action="server/login_handler.php" method="POST">
+                            <form id="loginForm" class="sign-in-form" action="server/login_handler.php" method="POST" style="display: block;">
                                 <h3>Sign In</h3>
                                 <div id="login-errors" class="alert alert-danger" style="display: none;"></div>
                                 <div class="form-group">
@@ -24,7 +24,7 @@
                                 <button type="submit" class="btn btn-primary">Login</button>
                                 <p class="toggle-text">Don't have an account? <a href="#" id="show-register">Register</a></p>
                             </form>
-                            <form id="registerForm" class="sign-up-form" method="POST" action="server/register_handler.php">
+                            <form id="registerForm" class="sign-up-form" method="POST" action="server/register_handler.php" style="display: none;">
                                 <h3>Create Account</h3>
                                 <div id="register-errors" class="alert alert-danger" style="display: none;"></div>
                                 <div class="form-group">
