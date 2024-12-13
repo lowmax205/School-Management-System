@@ -1,11 +1,10 @@
-
 <?php
 require_once 'teacher.query.php';
 header('Content-Type: application/json');
 
 try {
     // Validate required fields
-    $required_fields = ['uid', 'name', 'department', 'contact', 'status'];
+    $required_fields = ['email', 'password', 'firstName', 'lastName', 'department', 'contact', 'status'];
     foreach ($required_fields as $field) {
         if (!isset($_POST[$field]) || empty($_POST[$field])) {
             throw new Exception("Missing required field: $field");
@@ -13,8 +12,10 @@ try {
     }
 
     // Get form data
-    $uid = $_POST['uid'];
-    $name = $_POST['name'];
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    $firstName = $_POST['firstName'];
+    $lastName = $_POST['lastName'];
     $department = $_POST['department'];
     $contact = $_POST['contact'];
     $status = $_POST['status'];

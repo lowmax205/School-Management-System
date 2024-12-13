@@ -90,20 +90,3 @@ function changeUserRole($uid, $newType, $newRole)
         throw $e;
     }
 }
-
-function getUsersByType($type = null)
-{
-    global $conn;
-    $sql = "SELECT u.uid, u.email, u.role, ui.first_name, ui.last_name, ui.type 
-            FROM users_auth u 
-            JOIN user_info ui ON u.uid = ui.uid";
-    if ($type) {
-        $sql .= " WHERE ui.type = ?";
-    }
-    $stmt = $conn->prepare($sql);
-    if ($type) {
-        $stmt->bind_param("s", $type);
-    }
-    $stmt->execute();
-    return $stmt->get_result();
-}

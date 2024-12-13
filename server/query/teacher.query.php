@@ -79,18 +79,3 @@ function deleteTeacher($id)
     $stmt->bind_param("i", $id);
     return $stmt->execute();
 }
-
-function generateTeacherUID()
-{
-    global $conn;
-    do {
-        $uid = 'TCH-' . str_pad(mt_rand(1, 99999), 5, '0', STR_PAD_LEFT);
-        $sql = "SELECT uid FROM teacher WHERE uid = ?";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("s", $uid);
-        $stmt->execute();
-        $result = $stmt->get_result();
-    } while ($result->num_rows > 0);
-
-    return $uid;
-}
