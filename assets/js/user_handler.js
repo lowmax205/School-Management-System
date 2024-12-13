@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function handleRegistrationSuccess() {
     const errorDiv = document.getElementById("addUserErrors");
-    showMessage(errorDiv, "Registration successful! You can now login.", true);
+    showMessage(errorDiv, "Adding new USER successful!", true);
 
     setTimeout(() => {
       const signInForm = document.querySelector(".sign-in-form");
