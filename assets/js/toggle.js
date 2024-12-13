@@ -28,8 +28,4 @@ document.addEventListener("DOMContentLoaded", function () {
       registerForm.classList.remove("active");
       loginForm.classList.add("active");
     });
-  
-    const script = document.createElement("script");
-    script.src = "assets/js/error_handler.js";
-    document.body.appendChild(script);
-  });
+});

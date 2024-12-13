@@ -1,43 +1,66 @@
 <?php
-header('Content-Type: application/json');
-include '../includes/db_config.php';
+include 'db_config.php';
 
-$response = ['success' => false, 'message' => ''];
+$response = ['status' => '', 'message' => ''];
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $data = json_decode(file_get_contents('php://input'), true);
-    
-    $email = filter_var($data['email'], FILTER_VALIDATE_EMAIL);
-    $password = $data['password'];
-    
-    if (!$email) {
-        $response['message'] = 'Invalid email format';
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $email = trim($_POST['email']);
+    $password = trim($_POST['password']);
+    $confirmPassword = trim($_POST['confirmPassword']);
+
+    // Validation
+    if (empty($email)) {
+        $response = ['status' => 'error', 'message' => 'Email is required'];
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $response = ['status' => 'error', 'message' => 'Please enter a valid email address'];
+    } elseif (empty($password)) {
+        $response = ['status' => 'error', 'message' => 'Password is required'];
     } elseif (strlen($password) < 6) {
-        $response['message'] = 'Password must be at least 6 characters long';
+        $response = ['status' => 'error', 'message' => 'Password must be at least 6 characters long'];
+    } elseif ($password !== $confirmPassword) {
+        $response = ['status' => 'error', 'message' => 'Passwords do not match'];
     } else {
         // Check if email already exists
-        $stmt = $conn->prepare("SELECT id FROM users WHERE email = ?");
+        $stmt = $conn->prepare("SELECT id FROM users_auth WHERE email = ?");
         $stmt->bind_param("s", $email);
         $stmt->execute();
-        $result = $stmt->get_result();
         
-        if ($result->num_rows > 0) {
-            $response['message'] = 'Email already exists';
+        if ($stmt->get_result()->num_rows > 0) {
+            $response = ['status' => 'error', 'message' => 'Email is already registered'];
         } else {
-            // Hash password and insert new user
-            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-            $stmt = $conn->prepare("INSERT INTO users (username, user_password, email, phone_number) VALUES (?, ?, ?, ?)");
-            $stmt->bind_param("ss", $email, $hashed_password);
+            $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+            $createdAt = date('Y-m-d H:i:s');
+            $role_user = 'student';
+            $uidRandom = uniqid($role_user.'_', true);
+
+            $stmt = $conn->prepare("INSERT INTO users_auth (email, pwd, uid, role, created_at) VALUES (?, ?, ?, ?, ?)");
+            $stmt->bind_param("sssss", $email, $hashedPassword, $uidRandom, $role_user, $createdAt);
             
             if ($stmt->execute()) {
-                $response['success'] = true;
-                $response['message'] = 'Registration successful';
+                $stmt = $conn->prepare("SELECT id, email, uid FROM users_auth WHERE email = ?");
+                $stmt->bind_param("s", $email);
+                $stmt->execute();
+                $result = $stmt->get_result();
+                $user = $result->fetch_assoc();
+                $response = [
+                    'status' => 'success', 
+                    'message' => 'Registration successful! You can now login.',
+                    'user' => [
+                        'id' => $user['id'],
+                        'email' => $user['email'],
+                        'uid' => $user['uid']
+                    ]
+                ];
             } else {
-                $response['message'] = 'Database error occurred';
+                $response = ['status' => 'error', 'message' => 'Registration failed. Please try again.'];
             }
         }
-        $stmt->close();
     }
-}
+    $stmt->close();
+    $conn->close();
 
-echo json_encode($response);
+    header('Content-Type: application/json');
+    echo json_encode($response);
+    exit();
+}
+?>

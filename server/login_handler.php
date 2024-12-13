@@ -25,11 +25,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $user = $result->fetch_assoc();
             
             // Verify password with the stored hash
-            if ($password === $user['pwd']) {
+            if ($password == $user['pwd']) {
                 // Set session variables and redirect to the main page
                 $_SESSION['user_id'] = $user['id'];
                 $_SESSION['email'] = $email;
                 $_SESSION['role'] = $user['role'];
+                $_SESSION['uid'] = $user['uid'];
                 $response = ['status' => 'success', 'message' => 'Login successful'];
             } else {
                 $response = ['status' => 'error', 'message' => 'Invalid password'];
