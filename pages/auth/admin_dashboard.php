@@ -35,22 +35,6 @@ $teacher_count = $teacher_result->fetch_assoc()['total'];
                     </div>
                 </div>
             </div>
-            <div class="col-md-3">
-                <div class="card bg-warning text-white">
-                    <div class="card-body">
-                        <h5>Active Courses</h5>
-                        <h3>N/A</h3>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card bg-info text-white">
-                    <div class="card-body">
-                        <h5>Total Classes</h5>
-                        <h3>N/A</h3>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 </div>
