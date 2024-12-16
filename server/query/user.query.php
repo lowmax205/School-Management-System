@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/../db_config.php';
 
-function getAllUsers($start = 0, $limit = 10)
+function getAllUsers($start = 0, $limit = 10, $search = '')
 {
     global $conn;
     $query = "SELECT 
@@ -23,10 +23,23 @@ function getAllUsers($start = 0, $limit = 10)
               LEFT JOIN student s ON ui.uid = s.uid AND ui.type = 'Student'
               LEFT JOIN teacher t ON ui.uid = t.uid AND ui.type = 'Teacher'
               LEFT JOIN staff st ON ui.uid = st.uid AND ui.type = 'Staff'
-              LEFT JOIN admin a ON ui.uid = a.uid AND ua.role = 'Admin'
-              LIMIT ?, ?";
+              LEFT JOIN admin a ON ui.uid = a.uid AND ua.role = 'Admin'";
+    
+    if (!empty($search)) {
+        $search = "%$search%";
+        $query .= " WHERE CONCAT(ui.first_name, ' ', ui.last_name) LIKE ? OR ua.email LIKE ?";
+    }
+    
+    $query .= " LIMIT ?, ?";
+    
     $stmt = $conn->prepare($query);
-    $stmt->bind_param("ii", $start, $limit);
+    
+    if (!empty($search)) {
+        $stmt->bind_param("ssii", $search, $search, $start, $limit);
+    } else {
+        $stmt->bind_param("ii", $start, $limit);
+    }
+    
     $stmt->execute();
     return $stmt->get_result();
 }
@@ -70,11 +83,22 @@ function getUserDetails($uid)
     return $stmt->get_result()->fetch_assoc();
 }
 
-function getTotalUsersCount()
+function getTotalUsersCount($search = '')
 {
     global $conn;
-    $sql = "SELECT COUNT(*) as total FROM users_auth";
-    $result = $conn->query($sql);
+    $sql = "SELECT COUNT(*) as total FROM users_auth ua LEFT JOIN user_info ui ON ua.uid = ui.uid";
+    
+    if (!empty($search)) {
+        $search = "%$search%";
+        $sql .= " WHERE CONCAT(ui.first_name, ' ', ui.last_name) LIKE ? OR ua.email LIKE ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ss", $search, $search);
+        $stmt->execute();
+        $result = $stmt->get_result();
+    } else {
+        $result = $conn->query($sql);
+    }
+    
     $row = $result->fetch_assoc();
     return $row['total'];
 }

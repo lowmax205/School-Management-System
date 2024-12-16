@@ -8,11 +8,12 @@ include '../../includes/header.php';
 include '../../server/query/user.query.php';
 
 $usersPerPage = 10;
-$totalUsers = getTotalUsersCount();
+$search = isset($_GET['search']) ? $_GET['search'] : '';
+$totalUsers = getTotalUsersCount($search);
 $totalPages = ceil($totalUsers / $usersPerPage);
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $start = ($page - 1) * $usersPerPage;
-$users = getAllUsers($start, $usersPerPage);
+$users = getAllUsers($start, $usersPerPage, $search);
 ?>
 
 <div class="dashboard-container">
@@ -23,9 +24,17 @@ $users = getAllUsers($start, $usersPerPage);
             <div class="card-header bg-primary text-white">
                 <div class="d-flex justify-content-between align-items-center">
                     <h3 class="card-title mb-0"><i class="fas fa-users-cog me-2"></i>Users Management</h3>
-                    <button class="btn btn-light" data-bs-toggle="modal" data-bs-target="#addUserModal">
-                        <i class="fas fa-user-plus me-2"></i>Add User
-                    </button>
+                    <div class="d-flex gap-2">
+                        <form class="d-flex" method="GET">
+                            <input class="form-control me-2" type="search" name="search" placeholder="Search name or email" value="<?php echo htmlspecialchars($search); ?>">
+                            <button class="btn btn-light" type="submit">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </form>
+                        <button class="btn btn-light" data-bs-toggle="modal" data-bs-target="#addUserModal">
+                            <i class="fas fa-user-plus me-2"></i>Add User
+                        </button>
+                    </div>
                 </div>
             </div>
             <div class="card-body d-flex flex-column">
@@ -99,15 +108,15 @@ $users = getAllUsers($start, $usersPerPage);
                 <nav aria-label="Page navigation" class="mt-4">
                     <ul class="pagination justify-content-center">
                         <li class="page-item <?php if ($page <= 1) echo 'disabled'; ?>">
-                            <a class="page-link" href="?page=<?php echo $page - 1; ?>" tabindex="-1">Previous</a>
+                            <a class="page-link" href="?page=<?php echo $page - 1; ?>&search=<?php echo urlencode($search); ?>" tabindex="-1">Previous</a>
                         </li>
                         <?php for ($i = 1; $i <= $totalPages; $i++): ?>
                             <li class="page-item <?php if ($page == $i) echo 'active'; ?>">
-                                <a class="page-link" href="?page=<?php echo $i; ?>"><?php echo $i; ?></a>
+                                <a class="page-link" href="?page=<?php echo $i; ?>&search=<?php echo urlencode($search); ?>"><?php echo $i; ?></a>
                             </li>
                         <?php endfor; ?>
                         <li class="page-item <?php if ($page >= $totalPages) echo 'disabled'; ?>">
-                            <a class="page-link" href="?page=<?php echo $page + 1; ?>">Next</a>
+                            <a class="page-link" href="?page=<?php echo $page + 1; ?>&search=<?php echo urlencode($search); ?>">Next</a>
                         </li>
                     </ul>
                 </nav>

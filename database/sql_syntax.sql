@@ -132,6 +132,34 @@ BEGIN
 END//
 DELIMITER ;
 
+CREATE OR REPLACE VIEW user_details_view AS
+SELECT 
+    ua.uid,
+    ua.email,
+    ua.role,
+    DATE_FORMAT(ua.created_at, '%Y-%m-%d %H:%i:%s') as account_created,
+    ui.first_name,
+    ui.last_name,
+    ui.type,
+    ui.birth_date,
+    ui.gender,
+    ui.address,
+    ui.phone,
+    DATE_FORMAT(ui.updated_at, '%Y-%m-%d %H:%i:%s') as info_updated,
+    CASE 
+        WHEN ui.type = 'Student' THEN s.status
+        WHEN ui.type = 'Teacher' THEN t.status
+        WHEN ui.type = 'Staff' THEN st.status
+        WHEN ua.role = 'Admin' THEN a.status
+        ELSE 'Active'
+    END as status
+FROM users_auth ua
+LEFT JOIN user_info ui ON ua.uid = ui.uid
+LEFT JOIN student s ON ui.uid = s.uid AND ui.type = 'Student'
+LEFT JOIN teacher t ON ui.uid = t.uid AND ui.type = 'Teacher'
+LEFT JOIN staff st ON ui.uid = st.uid AND ui.type = 'Staff'
+LEFT JOIN admin a ON ui.uid = a.uid AND ua.role = 'Admin';
+
 -- Add Admin Users Auth Data
 INSERT INTO users_auth (email, pwd, role) VALUES
 ('admin@admin.com', 'admin123', 'Admin')
