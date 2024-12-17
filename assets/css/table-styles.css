@@ -1,0 +1,201 @@
+.card-body {
+  padding: 0 !important;
+}
+
+.table {
+  margin-bottom: 0 !important;
+  width: 100% !important;
+  table-layout: auto !important; /* Change from fixed to auto */
+  color: #212529;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  white-space: nowrap;
+  padding: 12px 16px;
+  min-width: 100px;
+}
+
+.table th {
+  position: sticky;
+  top: 0;
+  background-color: #f8f9fa;
+  z-index: 1;
+  padding: 12px;
+}
+
+.table td {
+  padding: 12px;
+  vertical-align: middle;
+}
+
+.sticky-top {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+/* Make specific columns wider */
+.table th:nth-child(2), /* Name column */
+.table td:nth-child(2),
+.table th:nth-child(3), /* Email column */
+.table td:nth-child(3),
+.table th:last-child, /* Actions column */
+.table td:last-child {
+  min-width: unset;
+}
+
+.table td.name-cell,
+.table td.email-cell {
+  min-width: 200px;
+}
+
+.table td.actions-cell {
+  min-width: 150px;
+  white-space: nowrap;
+}
+
+/* Adjust column widths as percentage of total width */
+.table th:nth-child(1), /* UID */
+.table td:nth-child(1) {
+  width: 5%;
+}
+
+.table th:nth-child(2), /* Name */
+.table td:nth-child(2) {
+  width: 15%;
+}
+
+.table th:nth-child(3), /* Email */
+.table td:nth-child(3) {
+  width: 15%;
+}
+
+.table th:nth-child(4), /* Role */
+.table td:nth-child(4) {
+  width: 8%;
+}
+
+.table th:nth-child(5), /* Type */
+.table td:nth-child(5) {
+  width: 8%;
+}
+
+.table th:nth-child(6), /* Status */
+.table td:nth-child(6) {
+  width: 8%;
+}
+
+.table th:nth-child(7), /* Created At */
+.table td:nth-child(7) {
+  width: 20%;
+}
+
+.table th:nth-child(8), /* Updated At */
+.table td:nth-child(8) {
+  width: 20%;
+}
+
+.table th:nth-child(9), /* Actions */
+.table td:nth-child(9) {
+  width: 15%;
+}
+
+/* Add horizontal scrolling for overflow */
+.table-responsive {
+  overflow-x: auto;
+  height: calc(100vh - 300px); /* Adjust based on your header/footer height */
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  -webkit-overflow-scrolling: touch;
+}
+
+.card {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border-radius: 0;
+}
+
+/* Handle text overflow in cells */
+.table td {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dashboard-container {
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+.table-responsive {
+  width: 100%;
+  height: 100%;
+}
+
+.table {
+  width: 100%;
+}
+
+@media screen and (max-width: 480px) {
+  .card {
+    width: 100%;
+    height: auto;
+  }
+}
+
+@media screen and (max-width: 720px) {
+  .card {
+    width: 100%;
+    height: auto;
+  }
+}
+/* Card Responsiveness */
+@media screen and (min-width: 1080px) {
+  .card {
+    max-width: 1800px;
+    margin: 0 auto;
+  }
+}
+
+/* Responsive table */
+@media screen and (max-width: 1200px) {
+  .table-responsive {
+    max-height: calc(100vh - 250px);
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .table th,
+  .table td {
+    padding: 8px;
+  }
+
+  .table-responsive {
+    max-height: calc(100vh - 200px);
+  }
+}
+
+/* Card styles for tables */
+.card-body.table-container {
+  padding: 0;
+}
+
+.table-controls {
+  padding: 1rem;
+  background-color: #fff;
+  border-bottom: 1px solid #dee2e6;
+}
+
+/* Pagination styles */
+.pagination {
+  margin: 1rem;
+  justify-content: center;
+}
+
+.pagination .page-link {
+  padding: 0.5rem 0.75rem;
+}

@@ -11,11 +11,11 @@ include '../../server/query/user.query.php';
 $statistics = getUserStatistics();
 ?>
 
-<div class="dashboard-container">
+<div class="container-fluid">
     <?php include '../auth/side_navbar_dashboard.php'; ?>
 
     <div class="content flex-grow-1">
-        <div class="card shadow-sm h-100">
+        <div class="card shadow-sm h-100 mb-5">
             <div class="card-header bg-primary text-white">
                 <div class="d-flex justify-content-between align-items-center">
                     <h3 class="card-title mb-0"><i class="fas fa-chart-line me-2"></i>System Reports</h3>
@@ -23,10 +23,10 @@ $statistics = getUserStatistics();
             </div>
 
             <div class="card-body">
-                <div class="container-fluid p-0">
+                <div class="container-fluid p-4">
                     <div class="row g-4 mb-4">
                         <div class="col-md-4">
-                            <div class="card border-0 shadow-sm">
+                            <div class="card border-1 shadow-sm">
                                 <div class="card-body text-center">
                                     <h4 class="text-muted">Total Users</h4>
                                     <h2 class="display-4 text-primary"><?php echo $statistics['total_users']; ?></h2>
@@ -36,22 +36,22 @@ $statistics = getUserStatistics();
                     </div>
 
                     <div class="row g-4">
-                        <div class="col-md-6">
-                            <div class="card border-0 shadow-sm h-100">
+                        <div class="col-md-4">
+                            <div class="card border-1 shadow-sm h-100">
                                 <div class="card-body">
                                     <canvas id="userRolesChart"></canvas>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="card border-0 shadow-sm h-100">
+                        <div class="col-md-4">
+                            <div class="card border-1 shadow-sm h-100">
                                 <div class="card-body">
                                     <canvas id="loginActivityChart"></canvas>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-12">
-                            <div class="card border-0 shadow-sm">
+                        <div class="col-4">
+                            <div class="card border-1 shadow-sm">
                                 <div class="card-body">
                                     <canvas id="systemActivityChart"></canvas>
                                 </div>
@@ -259,13 +259,8 @@ $statistics = getUserStatistics();
         transform: translateY(-5px);
     }
 
-    .chart-container {
-        position: relative;
-        height: 100%;
-    }
-
     @media print {
-        .dashboard-container>*:not(.content) {
+        .container-fluid>*:not(.content) {
             display: none;
         }
 

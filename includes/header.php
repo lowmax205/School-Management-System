@@ -12,7 +12,7 @@
     <link href="assets/css/auth-styles.css" rel="stylesheet">
     <link href="../assets/css/maintenance-styles.css" rel="stylesheet">
     <link href="../../assets/css/dashboard-styles.css" rel="stylesheet">
-    <link href="assets/css/table-style.css" rel="stylesheet">
+    <link href="../../assets/css/table-styles.css" rel="stylesheet">
 
 </head>
 

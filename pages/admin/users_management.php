@@ -20,7 +20,7 @@ $users = getAllUsers($start, $usersPerPage, $search);
     <?php include '../auth/side_navbar_dashboard.php'; ?>
 
     <div class="content flex-grow-1">
-        <div class="card shadow-sm h-100">
+        <div class="card shadow-sm h-100 mb-5">
             <div class="card-header bg-primary text-white">
                 <div class="d-flex justify-content-between align-items-center">
                     <h3 class="card-title mb-0"><i class="fas fa-users-cog me-2"></i>Users Management</h3>
@@ -37,10 +37,10 @@ $users = getAllUsers($start, $usersPerPage, $search);
                     </div>
                 </div>
             </div>
-            <div class="card-body d-flex flex-column">
+            <div class="card-body d-flex flex-column p-0">
                 <div class="table-responsive flex-grow-1">
-                    <table class="table table-hover">
-                        <thead>
+                    <table class="table table-hover table-bordered mb-0"> <!-- Add table-bordered and remove bottom margin -->
+                        <thead class="table-light sticky-top"> <!-- Make header sticky -->
                             <tr>
                                 <th>UID</th>
                                 <th>Name</th>
@@ -48,6 +48,8 @@ $users = getAllUsers($start, $usersPerPage, $search);
                                 <th>Role</th>
                                 <th>Type</th>
                                 <th>Status</th>
+                                <th>Created At</th>
+                                <th>Updated At</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -86,6 +88,8 @@ $users = getAllUsers($start, $usersPerPage, $search);
                                             <?php echo htmlspecialchars($user['status'] ?? 'Active'); ?>
                                         </span>
                                     </td>
+                                    <td><?php echo htmlspecialchars($user['account_created']); ?></td>
+                                    <td><?php echo htmlspecialchars($user['info_updated']); ?></td>
                                     <td>
                                         <button class="btn btn-sm btn-warning edit-user" data-uid="<?php echo $user['uid']; ?>">
                                             <i class="fas fa-edit"></i>
