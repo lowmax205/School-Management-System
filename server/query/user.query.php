@@ -14,7 +14,7 @@ function getAllUsers($start = 0, $limit = 10, $search = '')
         $query .= " WHERE CONCAT(first_name, ' ', last_name) LIKE ? OR email LIKE ?";
     }
 
-    $query .= " LIMIT ?, ?";
+    $query .= " ORDER BY account_created DESC LIMIT ?, ?";
 
     $stmt = $conn->prepare($query);
 
@@ -63,8 +63,6 @@ function updateUserRole($uid, $role, $type)
         throw $e;
     }
 }
-
-
 
 function getTotalUsersCount($search = '')
 {
@@ -195,12 +193,6 @@ function getUserStatistics()
     return $stats;
 }
 
-// Modify the logLoginActivity function to be more specific
-function logLoginActivity($uid)
-{
-    return logUserActivity($uid, 'success', 'User logged in successfully');
-}
-
 function logUserActivity($uid, $status, $description)
 {
     global $conn;
@@ -209,42 +201,6 @@ function logUserActivity($uid, $status, $description)
     $stmt = $conn->prepare($query);
     $stmt->bind_param("ssss", $uid, $status, $description, $ip_address);
     return $stmt->execute();
-}
-
-function getUserLogStatistics()
-{
-    global $conn;
-    $stats = array();
-
-    // Get logs by status for the last 7 days
-    $query = "SELECT 
-                DATE(log_time) as date,
-                status,
-                COUNT(*) as count 
-              FROM user_logs 
-              WHERE log_time >= DATE_SUB(NOW(), INTERVAL 7 DAY)
-              GROUP BY DATE(log_time), status
-              ORDER BY date ASC, status";
-
-    $result = mysqli_query($conn, $query);
-    $stats['log_activity'] = array();
-
-    // Initialize all 7 days with 0 counts for each status
-    for ($i = 6; $i >= 0; $i--) {
-        $date = date('Y-m-d', strtotime("-$i days"));
-        $stats['log_activity'][$date] = array(
-            'success' => 0,
-            'error' => 0,
-            'warning' => 0
-        );
-    }
-
-    // Fill in actual counts
-    while ($row = mysqli_fetch_assoc($result)) {
-        $stats['log_activity'][$row['date']][$row['status']] = (int)$row['count'];
-    }
-
-    return $stats;
 }
 
 function addSystemLog($userId, $action, $details, $status = 'success')
@@ -262,7 +218,7 @@ function getSystemLogs($limit = 100)
     global $conn;
     $query = "SELECT l.*, ua.email as username, ua.role 
               FROM system_logs l 
-              JOIN users_auth ua ON l.user_id = ua.uid 
+              LEFT JOIN users_auth ua ON l.user_id = ua.uid 
               ORDER BY l.created_at DESC 
               LIMIT ?";
     $stmt = $conn->prepare($query);

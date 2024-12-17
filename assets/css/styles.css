@@ -51,6 +51,7 @@ body {
 .card:hover {
   transform: translateY(-5px);
 }
+
 .form-control input,
 .form-control textarea {
   width: 100%;
@@ -111,6 +112,7 @@ body {
 main {
   flex: 1;
 }
+
 .type-cell {
   min-width: 120px;
 }

@@ -58,14 +58,6 @@ $statistics = getUserStatistics();
                             </div>
                         </div>
                     </div>
-
-                    <div class="row mt-4">
-                        <div class="col-12">
-                            <button onclick="printReport()" class="btn btn-primary">
-                                <i class="fas fa-print me-2"></i>Print Report
-                            </button>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -238,10 +230,6 @@ $statistics = getUserStatistics();
             }
         }
     });
-
-    function printReport() {
-        window.print();
-    }
 </script>
 
 <style>

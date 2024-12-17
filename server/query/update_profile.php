@@ -1,7 +1,7 @@
 <?php
 session_start();
 require_once '../db_config.php';
-require_once 'user.query.php'; // Add this line
+require_once 'user.query.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     echo json_encode(['status' => 'error', 'message' => 'Invalid request method']);

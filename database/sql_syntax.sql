@@ -89,12 +89,21 @@ CREATE TABLE user_logs (
 
 CREATE TABLE system_logs (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    user_id VARCHAR(50),
+    user_id VARCHAR(50) NULL,
     action VARCHAR(50),
     details TEXT,
     status ENUM('success', 'warning', 'error') DEFAULT 'success',
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users_auth(uid) ON DELETE CASCADE
+);
+
+-- Create contact_messages table
+CREATE TABLE contact_messages (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    message TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 -- Create trigger for automatic user_info creation

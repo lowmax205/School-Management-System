@@ -142,8 +142,7 @@ try {
     }
     echo json_encode([
         'status' => 'error',
-        'message' => $e->getMessage(),
-        'trace' => debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS)
+        'message' => $e->getMessage()
     ]);
 }
 
