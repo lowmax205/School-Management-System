@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once '../db_config.php';
+require_once 'user.query.php'; // Add this line
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     echo json_encode(['status' => 'error', 'message' => 'Invalid request method']);
@@ -48,6 +49,21 @@ try {
     );
 
     if ($stmt->execute()) {
+        // Log the profile update
+        logUserActivity(
+            $uid,
+            'success',
+            "Updated profile information"
+        );
+
+        // Add system log
+        addSystemLog(
+            $uid,
+            'update profile',
+            "User updated their profile information - Name: $first_name $last_name",
+            'success'
+        );
+
         // Update session data
         $_SESSION['first_name'] = $first_name;
         $_SESSION['last_name'] = $last_name;

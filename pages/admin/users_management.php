@@ -124,6 +124,10 @@ $users = getAllUsers($start, $usersPerPage, $search);
 
         </div>
     </div>
+    <!-- Add these script tags before your user_handler.js -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="../../assets/js/user_handler.js"></script>
+
 </div>
 
 <!-- Add User Modal -->
@@ -173,43 +177,100 @@ $users = getAllUsers($start, $usersPerPage, $search);
     </div>
 </div>
 
-<!-- Role Change Modal -->
+<!-- Update User Modal -->
 <div class="modal fade" id="roleModal" tabindex="-1">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header bg-warning">
-                <h5 class="modal-title"><i class="fas fa-user-tag"></i> Change User Role</h5>
+                <h5 class="modal-title"><i class="fas fa-user-edit"></i> Update User Information</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <form id="roleForm">
                 <input type="hidden" name="uid" id="edit_uid">
                 <div class="modal-body">
-                    <div class="mb-3">
-                        <label class="form-label">System Role</label>
-                        <select class="form-select" name="role" required>
-                            <option value="User">User</option>
-                            <option value="Admin">Admin</option>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">User Type</label>
-                        <select class="form-select" name="type" required>
-                            <option value="Student">Student</option>
-                            <option value="Teacher">Teacher</option>
-                            <option value="Staff">Staff</option>
-                        </select>
+                    <div class="row">
+                        <!-- Account Information -->
+                        <div class="col-md-6">
+                            <h6 class="mb-3">Account Information</h6>
+                            <div class="mb-3">
+                                <label class="form-label">Email Address</label>
+                                <input type="email" class="form-control" name="email" id="edit_email" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Change Password</label>
+                                <input type="password" class="form-control" name="password" placeholder="Leave blank to keep current password">
+                                <div class="form-text">Only fill this if you want to change the password</div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">System Role</label>
+                                <select class="form-select" name="role" required>
+                                    <option value="User">User</option>
+                                    <option value="Admin">Admin</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Status</label>
+                                <select class="form-select" name="status" required>
+                                    <option value="Active">Active</option>
+                                    <option value="Inactive">Inactive</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Personal Information -->
+                        <div class="col-md-6">
+                            <h6 class="mb-3">Personal Information</h6>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">First Name</label>
+                                    <input type="text" class="form-control" name="first_name" id="edit_first_name" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Last Name</label>
+                                    <input type="text" class="form-control" name="last_name" id="edit_last_name" required>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">Birth Date</label>
+                                    <input type="date" class="form-control" name="birth_date" id="edit_birth_date">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Gender</label>
+                                    <select class="form-select" name="gender" id="edit_gender">
+                                        <option value="">Select Gender</option>
+                                        <option value="M">Male</option>
+                                        <option value="F">Female</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Phone Number</label>
+                                <input type="tel" class="form-control" name="phone" id="edit_phone">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Address</label>
+                                <textarea class="form-control" name="address" id="edit_address" rows="2"></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">User Type</label>
+                                <select class="form-select" name="type" required>
+                                    <option value="Student">Student</option>
+                                    <option value="Teacher">Teacher</option>
+                                    <option value="Staff">Staff</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-warning">Update Role</button>
+                    <button type="submit" class="btn btn-warning">Update User</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
-
-<script src="../../assets/js/user_handler.js">
-</script>
 
 <?php include '../../includes/footer.php'; ?>

@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function handleRegistrationSuccess() {
     const errorDiv = document.getElementById("addUserErrors");
-    showMessage(errorDiv, "Adding new USER successful!", true);
+    showMessage(errorDiv, "Registration successful! You can now login.", true);
 
     setTimeout(() => {
       const signInForm = document.querySelector(".sign-in-form");
@@ -23,48 +23,101 @@ document.addEventListener("DOMContentLoaded", function () {
     button.addEventListener("click", function () {
       const uid = this.dataset.uid;
       document.getElementById("edit_uid").value = uid;
-      $("#roleModal").modal("show");
+      const modal = new bootstrap.Modal(document.getElementById("roleModal"));
+      modal.show();
     });
   });
 
-  // Handle role form submission
+  // Single handler for the role/edit form
   document.getElementById("roleForm").addEventListener("submit", function (e) {
     e.preventDefault();
     const formData = new FormData(this);
+    const userData = {};
 
-    fetch("../../server/query/update_user_role.php", {
+    // Convert FormData to JSON object, handling empty values
+    formData.forEach((value, key) => {
+      userData[key] = value || null;
+    });
+
+    const modal = bootstrap.Modal.getInstance(
+      document.getElementById("roleModal")
+    );
+
+    fetch("../../server/query/update_user.php", {
       method: "POST",
-      body: formData,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userData),
     })
-      .then((response) => response.json())
+      .then(async (response) => {
+        const text = await response.text();
+        try {
+          const data = JSON.parse(text);
+          if (!response.ok) {
+            throw new Error(
+              data.message || `HTTP error! status: ${response.status}`
+            );
+          }
+          return data;
+        } catch (e) {
+          console.error("Server response:", text);
+          throw new Error("Server error: " + e.message);
+        }
+      })
       .then((data) => {
         if (data.status === "success") {
-          alert("User role updated successfully");
+          alert("User information updated successfully");
+          modal.hide();
           location.reload();
         } else {
-          alert("Error: " + data.message);
+          throw new Error(data.message || "Unknown error occurred");
         }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        alert("Error updating user: " + error.message);
       });
   });
 
-  // Handle edit user button click
+  // Update the edit user button click handler
   document.querySelectorAll(".edit-user").forEach((button) => {
     button.addEventListener("click", function () {
-      const row = this.closest("tr");
       const uid = this.dataset.uid;
+      const row = this.closest("tr");
 
-      // Show edit fields
-      row
-        .querySelectorAll(".name-text, .email-text, .role-text, .type-text")
-        .forEach((el) => el.classList.add("d-none"));
-      row
-        .querySelectorAll(".name-edit, .email-edit, .role-edit, .type-edit")
-        .forEach((el) => el.classList.remove("d-none"));
+      // Fetch complete user details from server
+      fetch(`../../server/query/get_user_details.php?uid=${uid}`)
+        .then((response) => response.json())
+        .then((user) => {
+          // Populate all modal fields
+          document.getElementById("edit_uid").value = user.uid;
+          document.getElementById("edit_email").value = user.email;
+          document.getElementById("edit_first_name").value = user.first_name;
+          document.getElementById("edit_last_name").value = user.last_name;
+          document.getElementById("edit_birth_date").value =
+            user.birth_date || "";
+          document.getElementById("edit_gender").value = user.gender || "";
+          document.getElementById("edit_phone").value = user.phone || "";
+          document.getElementById("edit_address").value = user.address || "";
 
-      // Show/hide buttons
-      this.classList.add("d-none");
-      row.querySelector(".save-user").classList.remove("d-none");
-      row.querySelector(".cancel-edit").classList.remove("d-none");
+          // Set select values
+          document.querySelector('#roleModal select[name="role"]').value =
+            user.role;
+          document.querySelector('#roleModal select[name="type"]').value =
+            user.type;
+          document.querySelector('#roleModal select[name="status"]').value =
+            user.status;
+
+          // Show modal
+          const modal = new bootstrap.Modal(
+            document.getElementById("roleModal")
+          );
+          modal.show();
+        })
+        .catch((error) => {
+          alert("Error loading user details. Please try again.");
+        });
     });
   });
 
@@ -252,4 +305,3 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 });
-  

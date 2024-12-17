@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once '../db_config.php';
+require_once 'user.query.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     echo json_encode(['status' => 'error', 'message' => 'Invalid request method']);
@@ -58,6 +59,24 @@ try {
     $stmt = $conn->prepare("UPDATE user_info SET type = ?, first_name = ?, last_name = ? WHERE uid = ?");
     $stmt->bind_param("ssss", $type, $first_name, $last_name, $uid);
     $stmt->execute();
+
+    // After successful user creation, add logs
+    $adminUid = $_SESSION['uid']; // Get admin's uid who created the user
+
+    // Log in user_logs
+    logUserActivity(
+        $adminUid,
+        'success',
+        "Created new user: $email (UID: $uid)"
+    );
+
+    // Log in system_logs
+    addSystemLog(
+        $adminUid,
+        'user_create',
+        "Admin created new user - Email: $email, Type: $type, Name: $first_name $last_name",
+        'success'
+    );
 
     $conn->commit();
     echo json_encode(['status' => 'success']);

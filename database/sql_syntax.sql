@@ -76,9 +76,6 @@ CREATE TABLE staff (
     FOREIGN KEY (uid) REFERENCES user_info(uid) ON DELETE CASCADE
 );
 
--- Drop existing user_logs table if it exists
-DROP TABLE IF EXISTS user_logs;
-
 -- Create enhanced user_logs table
 CREATE TABLE user_logs (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -89,9 +86,6 @@ CREATE TABLE user_logs (
     ip_address VARCHAR(45),
     FOREIGN KEY (uid) REFERENCES users_auth(uid) ON DELETE CASCADE
 );
-
-// Drop existing system_logs table if exists
-DROP TABLE IF EXISTS system_logs;
 
 CREATE TABLE system_logs (
     id INT PRIMARY KEY AUTO_INCREMENT,
@@ -189,10 +183,9 @@ LEFT JOIN admin a ON ui.uid = a.uid AND ua.role = 'Admin';
 
 -- Add Admin Users Auth Data
 INSERT INTO users_auth (email, pwd, role) VALUES
-('admin@admin.com', 'admin123', 'Admin')
+('admin@admin.com', 'admin123', 'Admin'),
 
 -- Add sample Users Info Data
-INSERT INTO users_auth (email, pwd, role) VALUES
 ('juan.delacruz@gmail.com', 'juan12345', 'User'),
 ('maria.santos@gmail.com', 'marias2024', 'User'),
 ('pedro.mercado@gmail.com', 'mercado678', 'User'),
