@@ -76,6 +76,33 @@ CREATE TABLE staff (
     FOREIGN KEY (uid) REFERENCES user_info(uid) ON DELETE CASCADE
 );
 
+-- Drop existing user_logs table if it exists
+DROP TABLE IF EXISTS user_logs;
+
+-- Create enhanced user_logs table
+CREATE TABLE user_logs (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    uid VARCHAR(50),
+    log_time DATETIME DEFAULT CURRENT_TIMESTAMP,
+    status ENUM('success', 'error', 'warning') DEFAULT 'success',
+    description TEXT,
+    ip_address VARCHAR(45),
+    FOREIGN KEY (uid) REFERENCES users_auth(uid) ON DELETE CASCADE
+);
+
+// Drop existing system_logs table if exists
+DROP TABLE IF EXISTS system_logs;
+
+CREATE TABLE system_logs (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id VARCHAR(50),
+    action VARCHAR(50),
+    details TEXT,
+    status ENUM('success', 'warning', 'error') DEFAULT 'success',
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users_auth(uid) ON DELETE CASCADE
+);
+
 -- Create trigger for automatic user_info creation
 DELIMITER //
 CREATE TRIGGER after_user_auth_insert 

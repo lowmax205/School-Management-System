@@ -212,22 +212,4 @@ $users = getAllUsers($start, $usersPerPage, $search);
 <script src="../../assets/js/user_handler.js">
 </script>
 
-<style>
-    .type-cell {
-        min-width: 120px;
-    }
-
-    .type-edit {
-        padding: 2px;
-        height: auto;
-    }
-
-    .name-cell,
-    .email-cell,
-    .role-cell,
-    .type-cell {
-        min-width: 150px;
-    }
-</style>
-
 <?php include '../../includes/footer.php'; ?>

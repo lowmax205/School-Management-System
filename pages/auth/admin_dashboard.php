@@ -11,6 +11,14 @@ $student_count = $student_result->fetch_assoc()['total'];
 $teacher_query = "SELECT COUNT(*) as total FROM user_info WHERE type = 'Teacher'";
 $teacher_result = $conn->query($teacher_query);
 $teacher_count = $teacher_result->fetch_assoc()['total'];
+
+// Count today's successful logins
+$today_login_query = "SELECT COUNT(*) as total FROM user_logs 
+                     WHERE DATE(log_time) = CURDATE() 
+                     AND status = 'success' 
+                     AND description LIKE '%Successful login%'";
+$today_login_result = $conn->query($today_login_query);
+$today_login_count = $today_login_result->fetch_assoc()['total'];
 ?>
 
 <div class="dashboard-container">
@@ -32,6 +40,14 @@ $teacher_count = $teacher_result->fetch_assoc()['total'];
                     <div class="card-body">
                         <h5>Total Teachers</h5>
                         <h3><?php echo $teacher_count; ?></h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card bg-info text-white">
+                    <div class="card-body">
+                        <h5>Logins Today</h5>
+                        <h3><?php echo $today_login_count; ?></h3>
                     </div>
                 </div>
             </div>
