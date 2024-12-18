@@ -10,8 +10,6 @@ A comprehensive web-based management system for Surigao del Norte State Universi
 ## 🌟 Key Features
 
 - Teacher and Student Management
-- Grading System
-- Subject Management
 
 ## 🛠️ Prerequisites
 
