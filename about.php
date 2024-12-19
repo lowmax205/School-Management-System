@@ -1,6 +1,6 @@
     <div class="container py-5">
         <h1 class="section-title text-center">About SNSU</h1>
-        
+
         <div class="row g-4">
             <div class="col-md-6">
                 <div class="card h-100">
@@ -36,5 +36,3 @@
             </div>
         </div>
     </div>
-
-    
